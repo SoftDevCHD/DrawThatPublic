@@ -28,12 +28,22 @@ App similar to pictionary game. Played locally with a group of people. Allows fo
 
 **Required Must-have Stories**
 
-* [fill in your required user stories here]
+* User can register as a group.
+* User can login.
+* User can pick number of teams.
+* App picks random word for user to draw.
+* App keeps time for drawing phase.
+* Game loop (start round, app picks word, user draws, end round).
+* User can use app to keep score.
+* User can take a picture of their drawings.
+* User can post pictures.
+* User can see other groups' pictures in feed.
 * ...
 
 **Optional Nice-to-have Stories**
 
-* [fill in your required user stories here]
+* User can name the teams.
+* User can select difficulty of words.
 * ...
 
 ### 2. Screen Archetypes
