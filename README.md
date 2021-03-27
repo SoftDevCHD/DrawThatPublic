@@ -11,16 +11,16 @@ Original App Design Project - README Template
 
 ## Overview
 ### Description
-[Description of your app]
+App similar to pictionary game. Played locally with a group of people. Allows for sharing of pictures created while playing.
 
 ### App Evaluation
 [Evaluation of your app across the following attributes]
-- **Category:**
-- **Mobile:**
-- **Story:**
-- **Market:**
-- **Habit:**
-- **Scope:**
+- **Category:** Game / Entertainment
+- **Mobile:** This app would work best on a mobile device. It could potentially be used on computers and laptops later, but mobile would likely deliver the best experience.
+- **Story:** App facilitates playing a pictionary-like game in-person. Keeps track of score, provides words to draw, and allows for user sharing.
+- **Market:** App is good for any age group. People would register as a group rather than as an individual.
+- **Habit:** App could be used whenever a group of people would like to play.
+- **Scope:** Would start off with necessary features such as keeping score, providing words, and sharing with others. Could then expand on this in various ways such as allowing the user to draw pictures on the app and leaving comments on posts.
 
 ## Product Spec
 
