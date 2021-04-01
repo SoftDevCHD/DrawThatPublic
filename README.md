@@ -68,18 +68,21 @@ App similar to pictionary game. Played locally with a group of people. Allows fo
 
 **Tab Navigation** (Tab to Screen)
 
-* [fill out your first tab]
-* [fill out your second tab]
-* [fill out your third tab]
+* Detail
+* Creation
 
 **Flow Navigation** (Screen to Screen)
 
-* [list first screen here]
-   * [list screen navigation here]
-   * ...
-* [list second screen here]
-   * [list screen navigation here]
-   * ...
+* Login
+   * Stream
+* Stream
+   * Detail
+* Detail
+   * Creation
+   * Stream
+* Creation
+   * Detail
+   * Stream
 
 ## Wireframes
 [Add picture of your hand sketched wireframes in this section]
