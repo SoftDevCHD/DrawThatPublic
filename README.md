@@ -48,12 +48,21 @@ App similar to pictionary game. Played locally with a group of people. Allows fo
 
 ### 2. Screen Archetypes
 
-* [list first screen here]
-   * [list associated required story here]
-   * ...
-* [list second screen here]
-   * [list associated required story here]
-   * ...
+* Login
+   * User can register with a group
+   * User can sign in or sign up
+   * User chooses the number of teams participating
+* Stream
+   * Display random words to be drawn by players
+   * Clock/Timer for increased competitiveness. Basically, users have a time limit to draw
+   * Display teams and their total scores
+* Detail
+   * See drawings of user's team or other teams
+   * See team members
+   * See description of word to draw
+* Creation
+   * User can take picture of drawing
+   * Post pictures with comments to social media or feed
 
 ### 3. Navigation
 
