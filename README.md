@@ -14,7 +14,6 @@ Original App Design Project - README Template
 App similar to pictionary game. Played locally with a group of people. Allows for sharing of pictures created while playing.
 
 ### App Evaluation
-[Evaluation of your app across the following attributes]
 - **Category:** Game / Entertainment
 - **Mobile:** This app would work best on a mobile device. It could potentially be used on computers and laptops later, but mobile would likely deliver the best experience.
 - **Story:** App facilitates playing a pictionary-like game in-person. Keeps track of score, provides words to draw, and allows for user sharing.
@@ -85,7 +84,6 @@ App similar to pictionary game. Played locally with a group of people. Allows fo
    * Stream
 
 ## Wireframes
-[Add picture of your hand sketched wireframes in this section]
 <img src="wireframe.jpg" width=600>
 
 ### [BONUS] Digital Wireframes & Mockups
