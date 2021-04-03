@@ -1,7 +1,7 @@
 Original App Design Project - README Template
 ===
 
-# APP_NAME_HERE
+# DrawThat
 
 ## Table of Contents
 1. [Overview](#Overview)
@@ -11,7 +11,7 @@ Original App Design Project - README Template
 
 ## Overview
 ### Description
-App similar to pictionary game. Played locally with a group of people. Allows for sharing of pictures created while playing.
+App similar to pictionary game. DrawThat is played locally with a group of people. Allows for sharing of pictures created while playing.
 
 ### App Evaluation
 - **Category:** Game / Entertainment
