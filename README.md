@@ -90,11 +90,103 @@ App similar to pictionary game. DrawThat is played locally with a group of peopl
 
 ### [BONUS] Interactive Prototype
 
-## Schema 
-[This section will be completed in Unit 9]
-### Models
-[Add table of models]
-### Networking
-- [Add list of network requests by screen ]
+## Models
+
+## Schema
+
+### Post
+
+| Property	    | Type	   | Description                                    |
+| ------------- | -------- | ---------------------------------------------- |
+| objectId	    | String	 | unique id for the user post (default field)    |
+| Username	    | String   | Username of author/team                        |
+| image	        | File	   | image of drawing that user posts               |
+| caption	      | String	 | image caption/description by author/team       |
+| createdAt	    | DateTime | date when post is created (default field)      |
+| updatedAt	    | DateTime | date when post is last updated (default field) |
+| likesCount	  | Number	 | number of likes for the post (optional)        |
+| commentsCount | Number   | number of comments for the post (optional)     |
+
+### Phrase
+
+| Property      | Type     | Description                                    |
+| ------------- | -------- | ---------------------------------------------- |
+| objectId      | String   | unique id for the user/team post               |
+| difficulty    | Number   | Difficulty of word/phrase to draw              |
+| name          | String   | Word or phrase to be drawn                     |
+| createdAt	    | DateTime | date when post is created (default field)      |
+| updatedAt	    | DateTime | date when post is last updated (default field) |
+
+## Networking
+* Login Screen
+    * Login with username and password
+    ```java
+    private void loginUser(String username, String password) {
+        Log.i(TAG, "Attempting to login user " + username);
+        ParseUser.logInInBackground(username, password, new LogInCallback() {
+            @Override
+            public void done(ParseUser user, ParseException e) {
+                if (e != null) {
+                    Log.e(TAG, "Issue with login", e);
+                    Toast.makeText(LoginActivity.this, "Issue with login!", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                goMainActivity();
+                Toast.makeText(LoginActivity.this, "Success!", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+    ```
+    * (Create/Post) Create an account
+    ```java
+    private void signupUser(String username, String password) {
+        Log.i(TAG, "Attempting to sign up user " + username);
+        ParseUser user = new ParseUser();
+        user.setUsername(username);
+        user.setPassword(password);
+        user.signUpInBackground(new SignUpCallback() {
+            @Override
+            public void done(ParseException e) {
+                if (e != null) {
+                    Log.e(TAG, "Issue with sign up", e);
+                    Toast.makeText(LoginActivity.this, "Issue with sign up!", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                goMainActivity();
+                Toast.makeText(LoginActivity.this, "Success!", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+    ```
+* Stream Screen
+  * (Read/GET) query random word/phrase by difficulty level to be displayed to players
+    ```java
+    ParseQuery<Phrase> query = ParseQuery.getQuery(Phrase.class);
+    query.whereEqualTo(Phrase.KEY_DIFFICULTY, difficulty);
+    query.addDescendingOrder(Phrase.KEY_CREATED_AT);
+    query.findInBackground(new FindCallback<Phrase>() {
+        @Override
+        public void done(List<Phrase> phrases, ParseException e) {
+            if (e != null) {
+                Log.e(TAG, "Issue with getting phrases", e);
+                return;
+            }
+            for (Post phrase : phrases) {
+                Log.i(TAG, "Phrase: " + phrase.getName() + ", difficulty: " + phrase.getDifficulty);
+            }
+            // TODO: randomly select a phrase from the list...
+        }
+    });
+    ```
+* Detail/Feed Screen
+  * (Read/GET) Query all posts where user/team is author
+  * (Create/POST) Create a new like on a post (optional)
+  * (Delete) Delete existing like (optional)
+  * (Create/POST) Create a new comment on a post (optional)
+  * (Delete) Delete existing comment (optional)
+* Creation Screen
+  * (Create/POST) Create a new post object
+
+
 - [Create basic snippets for each Parse network request]
 - [OPTIONAL: List endpoints if using existing API such as Yelp]
