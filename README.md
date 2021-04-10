@@ -30,6 +30,7 @@ App similar to pictionary game. DrawThat is played locally with a group of peopl
 * User can register as a group.
 * User can login.
 * User can pick number of teams.
+* User can resume last game or start new game.
 * App picks random word for user to draw.
 * App keeps time for drawing phase.
 * Game loop (start round, app picks word, user draws, end round).
@@ -43,6 +44,7 @@ App similar to pictionary game. DrawThat is played locally with a group of peopl
 
 * User can name the teams.
 * User can select difficulty of words.
+* User can save multiple different games.
 * ...
 
 ### 2. Screen Archetypes
