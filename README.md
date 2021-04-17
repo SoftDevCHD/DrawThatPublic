@@ -27,26 +27,25 @@ App similar to pictionary game. DrawThat is played locally with a group of peopl
 
 **Required Must-have Stories**
 
-* User can register as a group.
-* User can login.
-* User can resume last game or start new game.
-* App picks random word for user to draw.
-* App keeps time for drawing phase.
-* Game loop (start round, app picks word, user draws, end round).
-* User can use app to keep score.
-* User can take a picture of their drawings.
-* User can post pictures.
-* User can see other groups' pictures in feed.
-* ...
+- [ ] User can register as a group.
+- [ ] User can login.
+- [ ] User can start new game.
+- [ ] User can resume last game.
+- [ ] User can name the teams.
+- [ ] App picks random word for user to draw.
+- [ ] App keeps time for drawing phase.
+- [ ] Game loop (start round, app picks word, user draws, end round).
+- [ ] User can use app to keep score.
+- [ ] User can take a picture of their drawings.
+- [ ] User can post pictures.
+- [ ] User can see other groups' pictures in feed.
 
 **Optional Nice-to-have Stories**
 
-* User can name the teams.
-* User can pick number of teams.
-* User can select difficulty of words.
-* User can save multiple different games.
-* UI/UX improvements.
-* ...
+- [ ] User can pick number of teams.
+- [ ] User can select difficulty of words.
+- [ ] User can save multiple different games.
+- [ ] UI/UX improvements.
 
 ### 2. Screen Archetypes
 
