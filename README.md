@@ -29,7 +29,6 @@ App similar to pictionary game. DrawThat is played locally with a group of peopl
 
 * User can register as a group.
 * User can login.
-* User can pick number of teams.
 * User can resume last game or start new game.
 * App picks random word for user to draw.
 * App keeps time for drawing phase.
@@ -43,8 +42,10 @@ App similar to pictionary game. DrawThat is played locally with a group of peopl
 **Optional Nice-to-have Stories**
 
 * User can name the teams.
+* User can pick number of teams.
 * User can select difficulty of words.
 * User can save multiple different games.
+* UI/UX improvements.
 * ...
 
 ### 2. Screen Archetypes
@@ -52,7 +53,8 @@ App similar to pictionary game. DrawThat is played locally with a group of peopl
 * Login
    * User can register with a group
    * User can sign in or sign up
-   * User chooses the number of teams participating
+* Menu
+   * User can set up game (set up teams and continue or create new game)
 * Stream
    * Display random words to be drawn by players
    * Clock/Timer for increased competitiveness. Basically, users have a time limit to draw
@@ -75,6 +77,8 @@ App similar to pictionary game. DrawThat is played locally with a group of peopl
 **Flow Navigation** (Screen to Screen)
 
 * Login
+   * Menu
+* Menu
    * Stream
 * Stream
    * Detail
@@ -86,7 +90,7 @@ App similar to pictionary game. DrawThat is played locally with a group of peopl
    * Stream
 
 ## Wireframes
-<img src="wireframe.jpg" width=600>
+<img src="wireframe2.jpg" width=600>
 
 ### [BONUS] Digital Wireframes & Mockups
 
