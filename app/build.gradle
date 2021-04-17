@@ -2,6 +2,10 @@ plugins {
     id 'com.android.application'
 }
 
+def apikeyPropertiesFile = rootProject.file("apikey.properties")
+def apikeyProperties = new Properties()
+apikeyProperties.load(new FileInputStream(apikeyPropertiesFile))
+
 android {
     compileSdkVersion 30
     buildToolsVersion "30.0.2"
@@ -14,6 +18,9 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        buildConfigField("String", "BACK4APP_APPLICATION_ID", apikeyProperties['BACK4APP_APPLICATION_ID'])
+        buildConfigField("String", "BACK4APP_CLIENT_KEY", apikeyProperties['BACK4APP_CLIENT_KEY'])
     }
 
     buildTypes {
