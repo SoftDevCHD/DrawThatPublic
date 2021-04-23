@@ -51,7 +51,9 @@ public class MainActivity extends AppCompatActivity {
                 switch (menuItem.getItemId()) {
                     case R.id.action_game:
                         fragment = new GameFragment();
-                        fragment.setArguments(bundle);
+                        if (bundle != null ) {
+                            fragment.setArguments(bundle);
+                        }
                         break;
                     case R.id.action_status:
                         fragment = new StatusFragment();
