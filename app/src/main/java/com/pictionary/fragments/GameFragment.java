@@ -28,6 +28,8 @@ public class GameFragment extends Fragment {
     public static final String TAG = "GameFragment";
     private TextView tvDifficulty;
     private TextView tvName;
+    private TextView teamOneScore;
+    private TextView teamTwoScore;
     private Button btnStartTimer;
     private Button btnNextPhrase;
     private ProgressBar pgTimer;
@@ -52,6 +54,8 @@ public class GameFragment extends Fragment {
         btnStartTimer = (Button) view.findViewById(R.id.btnStartTimer);
         btnNextPhrase = (Button) view.findViewById(R.id.btnNextPhrase);
         pgTimer = (ProgressBar) view.findViewById(R.id.pgTimer);
+        teamOneScore = (TextView) view.findViewById(R.id.tvTeamOne);
+        teamTwoScore = (TextView) view.findViewById(R.id.tvTeamTwo);
     }
 
     private void getRandomPhrase() {
