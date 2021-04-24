@@ -13,14 +13,19 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.parse.FindCallback;
+import com.parse.Parse;
 import com.parse.ParseException;
+import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.pictionary.Phrase;
 import com.pictionary.R;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 
 public class GameFragment extends Fragment {
@@ -33,7 +38,7 @@ public class GameFragment extends Fragment {
     private Button btnStartTimer;
     private Button btnNextPhrase;
     private ProgressBar pgTimer;
-    private List<Phrase> phrases;
+    Phrase phrase;
 
     public GameFragment() {
         // Required empty public constructor
@@ -56,23 +61,38 @@ public class GameFragment extends Fragment {
         pgTimer = (ProgressBar) view.findViewById(R.id.pgTimer);
         teamOneScore = (TextView) view.findViewById(R.id.tvTeamOne);
         teamTwoScore = (TextView) view.findViewById(R.id.tvTeamTwo);
-    }
 
-    private void getRandomPhrase() {
-        Phrase phrase;
-        ParseQuery<Phrase> query = ParseQuery.getQuery(Phrase.class);
-        query.setLimit(1);
-        query.findInBackground(new FindCallback<Phrase>() {
+        phrase = getPhrase();
+        tvDifficulty.setText(phrase.getDifficulty());
+        tvName.setText(phrase.getName());
+
+        setupNewPhrase();
+
+        btnNextPhrase.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void done(List<Phrase> phrases, ParseException e) {
-                if (e != null) {
-                    Log.e(TAG, "Issue getting phrase", e);
-                    return;
-                }
-                Phrase phrase = phrases.get(0);
-                tvDifficulty.setText(phrase.getDifficulty());
-                tvName.setText(phrase.getName());
+            public void onClick(View v) {
+                setupNewPhrase();
             }
         });
+    }
+
+    private void setupNewPhrase() {
+        phrase = getPhrase();
+        tvDifficulty.setText(phrase.getDifficulty());
+        tvName.setText(phrase.getName());
+    }
+
+    private Phrase getPhrase() {
+        ParseQuery<Phrase> query = ParseQuery.getQuery(Phrase.class);
+        try {
+            List<Phrase> phrases = query.find();
+            Random random = new Random();
+            int randomIndex = random.nextInt(phrases.size());
+            return phrases.get(randomIndex);
+        } catch (ParseException e) {
+            Toast.makeText(this.getContext(), "Error" + e.getMessage(), Toast.LENGTH_SHORT).show();
+            Log.e(TAG, "Unable to retrieve phrases...");
+            return null;
+        }
     }
 }
