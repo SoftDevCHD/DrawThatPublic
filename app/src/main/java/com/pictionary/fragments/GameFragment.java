@@ -20,15 +20,11 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.parse.FindCallback;
-import com.parse.Parse;
 import com.parse.ParseException;
-import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.pictionary.Phrase;
 import com.pictionary.R;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -38,8 +34,10 @@ public class GameFragment extends Fragment {
     public static final String TAG = "GameFragment";
     private TextView tvDifficulty;
     private TextView tvName;
-    private TextView teamOneScore;
-    private TextView teamTwoScore;
+    private TextView tvTeamOneName;
+    private TextView tvTeamTwoName;
+    private TextView tvTeamOneScore;
+    private TextView tvTeamTwoScore;
     private Button btnStartTimer;
     private Button btnNextPhrase;
     private ProgressBar pgTimer;
@@ -77,8 +75,18 @@ public class GameFragment extends Fragment {
         btnStartTimer = (Button) view.findViewById(R.id.btnStartTimer);
         btnNextPhrase = (Button) view.findViewById(R.id.btnNextPhrase);
         pgTimer = (ProgressBar) view.findViewById(R.id.pgTimer);
-        teamOneScore = (TextView) view.findViewById(R.id.tvTeamOne);
-        teamTwoScore = (TextView) view.findViewById(R.id.tvTeamTwo);
+        tvTeamOneName = (TextView) view.findViewById(R.id.tvTeamOneName);
+        tvTeamTwoName = (TextView) view.findViewById(R.id.tvTeamTwoName);
+        tvTeamOneScore = view.findViewById(R.id.tvTeamOneScore);
+        tvTeamTwoScore = view.findViewById(R.id.tvTeamTwoScore);
+
+        if (getArguments() != null) {
+            Bundle args = getArguments();
+            tvTeamOneName.setText(args.getString("teamOneName") != null ? args.getString("teamOneName") : "Team One");
+            tvTeamTwoName.setText(args.getString("teamTwoName") != null ? args.getString("teamTwoName") : "Team Two");
+            tvTeamOneScore.setText(String.valueOf(args.getInt("teamOneScore")));
+            tvTeamTwoScore.setText(String.valueOf(args.getInt("teamTwoScore")));
+        }
 
         phrase = getPhrase();
         tvDifficulty.setText(phrase.getDifficulty());

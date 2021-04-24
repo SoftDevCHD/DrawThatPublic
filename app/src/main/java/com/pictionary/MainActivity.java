@@ -36,8 +36,8 @@ public class MainActivity extends AppCompatActivity {
             bundle = new Bundle();
             bundle.putString("teamOneName", intent.getStringExtra("teamOneName"));
             bundle.putString("teamTwoName", intent.getStringExtra("teamTwoName"));
-            bundle.putString("teamOneScore", intent.getStringExtra("teamOneScore"));
-            bundle.putString("teamTwoScore", intent.getStringExtra("teamTwoScore"));
+            bundle.putInt("teamOneScore", intent.getIntExtra("teamOneScore", 0));
+            bundle.putInt("teamTwoScore", intent.getIntExtra("teamTwoScore", 0));
             bundle.putString("phrase", intent.getStringExtra("phrase"));
 
         } catch (Exception e) { Log.e(TAG, "new game is created");}

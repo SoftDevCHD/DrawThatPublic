@@ -111,7 +111,7 @@ public class CreateGame extends AppCompatActivity {
                     return;
                 }
 
-                loadMainActivity();
+                loadMainActivity(game.getTeamOneName(), game.getTeamTwoName());
             }
         });
     }
@@ -123,6 +123,14 @@ public class CreateGame extends AppCompatActivity {
         intent.putExtra("teamOneScore", scoreOne);
         intent.putExtra("teamTwoScore", scoreTwo);
         intent.putExtra("phrase", phrase);
+        startActivity(intent);
+        finish();
+    }
+
+    private void loadMainActivity(String teamOne, String teamTwo) {
+        Intent intent = new Intent(this, MainActivity.class);
+        intent.putExtra("teamOneName", teamOne);
+        intent.putExtra("teamTwoName", teamTwo);
         startActivity(intent);
         finish();
     }
