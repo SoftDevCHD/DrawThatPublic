@@ -21,12 +21,16 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.parse.FindCallback;
+import com.parse.Parse;
 import com.parse.ParseException;
+import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.pictionary.Phrase;
 import com.pictionary.R;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 
 public class GameFragment extends Fragment {
@@ -34,10 +38,11 @@ public class GameFragment extends Fragment {
     public static final String TAG = "GameFragment";
     private TextView tvDifficulty;
     private TextView tvName;
+    private TextView teamOneScore;
+    private TextView teamTwoScore;
     private Button btnStartTimer;
     private Button btnNextPhrase;
     private ProgressBar pgTimer;
-    private List<Phrase> phrases;
     private Drawable pgDrawable;
     private ObjectAnimator animProgress;
     private ObjectAnimator animColorFirst;
@@ -50,6 +55,8 @@ public class GameFragment extends Fragment {
     private int timerEndColor;
     private int timerIdleColor;
     private int timerDuration;
+    Phrase phrase;
+
 
     public GameFragment() {
         // Required empty public constructor
@@ -70,6 +77,21 @@ public class GameFragment extends Fragment {
         btnStartTimer = (Button) view.findViewById(R.id.btnStartTimer);
         btnNextPhrase = (Button) view.findViewById(R.id.btnNextPhrase);
         pgTimer = (ProgressBar) view.findViewById(R.id.pgTimer);
+        teamOneScore = (TextView) view.findViewById(R.id.tvTeamOne);
+        teamTwoScore = (TextView) view.findViewById(R.id.tvTeamTwo);
+
+        phrase = getPhrase();
+        tvDifficulty.setText(phrase.getDifficulty());
+        tvName.setText(phrase.getName());
+
+        setupNewPhrase();
+
+        btnNextPhrase.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setupNewPhrase();
+            }
+        });
 
         // Set up timer animation
         timerDuration = 10;
@@ -137,28 +159,30 @@ public class GameFragment extends Fragment {
         });
     }
 
-    private void getRandomPhrase() {
-        Phrase phrase;
-        ParseQuery<Phrase> query = ParseQuery.getQuery(Phrase.class);
-        query.setLimit(1);
-        query.findInBackground(new FindCallback<Phrase>() {
-            @Override
-            public void done(List<Phrase> phrases, ParseException e) {
-                if (e != null) {
-                    Log.e(TAG, "Issue getting phrase", e);
-                    return;
-                }
-                Phrase phrase = phrases.get(0);
-                tvDifficulty.setText(phrase.getDifficulty());
-                tvName.setText(phrase.getName());
-            }
-        });
-    }
-
-    private void resetTimer() {
-        isAnimating = false;
+    private void resetTimer(){
+        isAnimating=false;
         btnStartTimer.setText("Start Timer");
         pgTimer.setProgress(pgTimer.getMax());
         pgDrawable.setTint(timerIdleColor);
+    }
+
+    private void setupNewPhrase() {
+        phrase = getPhrase();
+        tvDifficulty.setText(phrase.getDifficulty());
+        tvName.setText(phrase.getName());
+    }
+
+    private Phrase getPhrase() {
+        ParseQuery<Phrase> query = ParseQuery.getQuery(Phrase.class);
+        try {
+            List<Phrase> phrases = query.find();
+            Random random = new Random();
+            int randomIndex = random.nextInt(phrases.size());
+            return phrases.get(randomIndex);
+        } catch (ParseException e) {
+            Toast.makeText(this.getContext(), "Error" + e.getMessage(), Toast.LENGTH_SHORT).show();
+            Log.e(TAG, "Unable to retrieve phrases...");
+            return null;
+        }
     }
 }

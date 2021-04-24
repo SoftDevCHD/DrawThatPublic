@@ -8,6 +8,7 @@ import androidx.fragment.app.FragmentManager;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -19,6 +20,8 @@ import com.pictionary.fragments.StatusFragment;
 
 public class MainActivity extends AppCompatActivity {
 
+    private static Bundle bundle;
+
     public static final String TAG = "MainActivity";
     final FragmentManager fragmentManager = getSupportFragmentManager();
     private BottomNavigationView bottomNavigationView;
@@ -27,6 +30,17 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        try {
+            Intent intent = getIntent();
+            bundle = new Bundle();
+            bundle.putString("teamOneName", intent.getStringExtra("teamOneName"));
+            bundle.putString("teamTwoName", intent.getStringExtra("teamTwoName"));
+            bundle.putString("teamOneScore", intent.getStringExtra("teamOneScore"));
+            bundle.putString("teamTwoScore", intent.getStringExtra("teamTwoScore"));
+            bundle.putString("phrase", intent.getStringExtra("phrase"));
+
+        } catch (Exception e) { Log.e(TAG, "new game is created");}
 
         bottomNavigationView = findViewById(R.id.bottomNavigationView);
 
@@ -37,6 +51,9 @@ public class MainActivity extends AppCompatActivity {
                 switch (menuItem.getItemId()) {
                     case R.id.action_game:
                         fragment = new GameFragment();
+                        if (bundle != null ) {
+                            fragment.setArguments(bundle);
+                        }
                         break;
                     case R.id.action_status:
                         fragment = new StatusFragment();

@@ -15,12 +15,18 @@ public class Game extends ParseObject {
     public static final String KEY_TEAM_ONE_SCORE = "teamOneScore";
     public static final String KEY_TEAM_TWO_SCORE = "teamTwoScore";
     public static final String KEY_CREATED_BY = "createdBy";
+    public static final String KEY_CREATED_AT = "createdAt";
+    public static final String KEY_PHRASE = "phrase";
 
     public String getId() { return getString(KEY_ID); }
 
     public void setTeamOneName(String name) { put(KEY_TEAM_ONE_NAME, name); }
 
     public void setTeamTwoName(String name) { put(KEY_TEAM_TWO_NAME, name); }
+
+    public String getTeamOneName() { return getString(KEY_TEAM_ONE_NAME); }
+
+    public String getTeamTwoName() { return getString(KEY_TEAM_TWO_NAME); }
 
     public void setTeamOneScore(int score) { put(KEY_TEAM_ONE_SCORE, score); }
 
@@ -34,7 +40,7 @@ public class Game extends ParseObject {
 
     public ParseUser getCreatedBy() { return getParseUser(KEY_CREATED_BY); }
 
-    public Date getCreatedAtInfo() { return getCreatedAt(); }
+    public Date getCreatedAt() { return getDate(KEY_CREATED_AT); }
 
-    public Date getLastAccessed() { return getUpdatedAt(); }
+    public String getPhrase() { return getString(KEY_PHRASE); }
 }
