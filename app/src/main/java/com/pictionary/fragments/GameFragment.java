@@ -1,5 +1,9 @@
 package com.pictionary.fragments;
 
+import android.animation.Animator;
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -10,6 +14,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.LinearInterpolator;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -38,7 +43,20 @@ public class GameFragment extends Fragment {
     private Button btnStartTimer;
     private Button btnNextPhrase;
     private ProgressBar pgTimer;
+    private Drawable pgDrawable;
+    private ObjectAnimator animProgress;
+    private ObjectAnimator animColorFirst;
+    private ObjectAnimator animColorLast;
+    private AnimatorSet animSet;
+    private boolean isAnimating;
+    private boolean isCancelled;
+    private int timerStartColor;
+    private int timerMidColor;
+    private int timerEndColor;
+    private int timerIdleColor;
+    private int timerDuration;
     Phrase phrase;
+
 
     public GameFragment() {
         // Required empty public constructor
@@ -74,6 +92,78 @@ public class GameFragment extends Fragment {
                 setupNewPhrase();
             }
         });
+
+        // Set up timer animation
+        timerDuration = 60;
+        pgDrawable = pgTimer.getProgressDrawable();
+        timerStartColor = 0xFF34F100;
+        timerMidColor = 0xFFFFF200;
+        timerEndColor = 0xFFFF0000;
+        timerIdleColor = 0xFF9BCA93;
+        pgDrawable.setTint(timerIdleColor);
+        animProgress = ObjectAnimator.ofInt(pgTimer, "progress", 1000, 0);
+        animColorFirst = ObjectAnimator.ofArgb(pgDrawable, "tint",
+                timerStartColor, timerMidColor);
+        animColorLast = ObjectAnimator.ofArgb(pgDrawable, "tint",
+                timerMidColor, timerEndColor);
+        animSet = new AnimatorSet();
+        animProgress.setDuration(timerDuration * 1000); // Duration converted to milliseconds
+        animColorFirst.setDuration((timerDuration * 1000) / 2);
+        animColorLast.setDuration((timerDuration * 1000) / 2);
+        animSet.play(animProgress);
+        animSet.playSequentially(animColorFirst, animColorLast);
+        animSet.setInterpolator(new LinearInterpolator());
+        animSet.addListener(new Animator.AnimatorListener() {
+            @Override
+            public void onAnimationStart(Animator animation) {
+                isAnimating = true;
+                btnStartTimer.setText("Stop Timer");
+            }
+
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                // If animation was not cancelled manually, take the following actions
+                if(!isCancelled) {
+                    Toast.makeText(getActivity(), "Time is up!", Toast.LENGTH_SHORT).show();
+                    resetTimer();
+                }
+            }
+
+            @Override
+            public void onAnimationCancel(Animator animation) {
+                resetTimer();
+            }
+
+            @Override
+            public void onAnimationRepeat(Animator animation) {
+
+            }
+        });
+        isAnimating = false;
+        isCancelled = false;
+
+        btnStartTimer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(!isAnimating) {
+                    // Start animating timer
+                    animSet.start();
+                }
+                else {
+                    // Cancel the animation
+                    isCancelled = true; // Timer was cancelled manually, not from running out of time
+                    animSet.cancel();
+                    isCancelled = false;
+                }
+            }
+        });
+    }
+
+    private void resetTimer(){
+        isAnimating=false;
+        btnStartTimer.setText("Start Timer");
+        pgTimer.setProgress(pgTimer.getMax());
+        pgDrawable.setTint(timerIdleColor);
     }
 
     private void setupNewPhrase() {

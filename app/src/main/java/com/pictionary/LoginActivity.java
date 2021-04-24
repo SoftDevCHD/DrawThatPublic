@@ -89,6 +89,7 @@ public class LoginActivity extends AppCompatActivity {
                     Toast.makeText(LoginActivity.this, "Could not sign up. Try a different username", Toast.LENGTH_LONG).show();
                 } else {
                     Log.i(TAG, "Signed up user: " + username);
+                    Toast.makeText(LoginActivity.this, "Signed up successfully!", Toast.LENGTH_SHORT).show();
                     loadCreateGame();
                 }
             }
