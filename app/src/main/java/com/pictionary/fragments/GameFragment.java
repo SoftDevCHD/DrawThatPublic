@@ -94,7 +94,7 @@ public class GameFragment extends Fragment {
         });
 
         // Set up timer animation
-        timerDuration = 10;
+        timerDuration = 60;
         pgDrawable = pgTimer.getProgressDrawable();
         timerStartColor = 0xFF34F100;
         timerMidColor = 0xFFFFF200;
