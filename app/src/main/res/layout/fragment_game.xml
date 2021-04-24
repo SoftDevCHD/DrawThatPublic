@@ -76,24 +76,44 @@
             app:layout_constraintTop_toBottomOf="@+id/btnStartTimer" />
 
         <TextView
-            android:id="@+id/tvTeamOne"
+            android:id="@+id/tvTeamOneName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="12dp"
             android:layout_marginTop="16dp"
-            android:text="Team One score"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Team One" />
 
         <TextView
-            android:id="@+id/tvTeamTwo"
+            android:id="@+id/tvTeamOneScore"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="32dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Team One score" />
+
+        <TextView
+            android:id="@+id/tvTeamTwoName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
-            android:text="Team Two Score"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Team Two" />
+
+        <TextView
+            android:id="@+id/tvTeamTwoScore"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:layout_marginEnd="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Team Two Score" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </FrameLayout>
