@@ -58,17 +58,13 @@ public class CreateGame extends AppCompatActivity {
     }
 
     private void findPreviousGames() {
-        ParseQuery<Game> query = ParseQuery.getQuery(Game.class);
-        query.whereEqualTo(Game.KEY_CREATED_BY, ParseUser.getCurrentUser());
-        query.whereExists(Game.KEY_CREATED_AT);
-        try {
-                List<Game> games = query.find();
-                btnResume.setEnabled(true);
-            } catch (Exception e) {
-                Log.e(TAG, "No previous games found");
-                e.printStackTrace();
-                return;
-            }
+        int resume = (int) getIntent().getSerializableExtra("resume");
+        if (resume == 1) {
+            btnResume.setEnabled(false);
+        }
+        else {
+            btnResume.setEnabled(true);
+        }
     }
 
     private void resumeGame() {

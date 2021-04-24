@@ -38,44 +38,46 @@ public class MainActivity extends AppCompatActivity {
             bundle.putString("teamTwoName", intent.getStringExtra("teamTwoName"));
             bundle.putInt("teamOneScore", intent.getIntExtra("teamOneScore", 0));
             bundle.putInt("teamTwoScore", intent.getIntExtra("teamTwoScore", 0));
-            bundle.putString("phrase", intent.getStringExtra("phrase"));
 
-        } catch (Exception e) { Log.e(TAG, "new game is created");}
+        } catch (Exception e) {
+            Log.e(TAG, "new game is created");
+        } finally {
 
-        bottomNavigationView = findViewById(R.id.bottomNavigationView);
+            bottomNavigationView = findViewById(R.id.bottomNavigationView);
 
-        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-                Fragment fragment;
-                switch (menuItem.getItemId()) {
-                    case R.id.action_game:
-                        fragment = new GameFragment();
-                        if (bundle != null ) {
-                            fragment.setArguments(bundle);
-                        }
-                        break;
-                    case R.id.action_status:
-                        fragment = new StatusFragment();
-                        break;
-                    case R.id.action_profile:
-                        fragment = new ProfileFragment();
-                        break;
-                    case R.id.action_logout:
-                        ParseUser.logOut();
-                        Intent intent = new Intent(getBaseContext(), LoginActivity.class);
-                        startActivity(intent);
-                        finish();
-                    default:
-                        fragment = new GameFragment();
+            bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+                @Override
+                public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+                    Fragment fragment;
+                    switch (menuItem.getItemId()) {
+                        case R.id.action_game:
+                            fragment = new GameFragment();
+                            if (bundle != null) {
+                                fragment.setArguments(bundle);
+                            }
+                            break;
+                        case R.id.action_status:
+                            fragment = new StatusFragment();
+                            break;
+                        case R.id.action_profile:
+                            fragment = new ProfileFragment();
+                            break;
+                        case R.id.action_logout:
+                            ParseUser.logOut();
+                            Intent intent = new Intent(getBaseContext(), LoginActivity.class);
+                            startActivity(intent);
+                            finish();
+                        default:
+                            fragment = new GameFragment();
+                    }
+
+                    fragmentManager.beginTransaction().replace(R.id.flContainer, fragment).commit();
+                    return true;
                 }
+            });
 
-                fragmentManager.beginTransaction().replace(R.id.flContainer,  fragment).commit();
-                return true;
-            }
-        });
-
-        // Set default selection
-        bottomNavigationView.setSelectedItemId(R.id.action_game);
+            // Set default selection
+            bottomNavigationView.setSelectedItemId(R.id.action_game);
+        }
     }
 }

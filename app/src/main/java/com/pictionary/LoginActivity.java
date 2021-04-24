@@ -67,7 +67,7 @@ public class LoginActivity extends AppCompatActivity {
                     Toast.makeText(LoginActivity.this, "Login failed.", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                loadCreateGame();
+                loadCreateGame(0);
             }
 
 
@@ -90,14 +90,15 @@ public class LoginActivity extends AppCompatActivity {
                 } else {
                     Log.i(TAG, "Signed up user: " + username);
                     Toast.makeText(LoginActivity.this, "Signed up successfully!", Toast.LENGTH_SHORT).show();
-                    loadCreateGame();
+                    loadCreateGame(1);
                 }
             }
         });
     }
 
-    private void loadCreateGame() {
+    private void loadCreateGame(int x) {
         Intent intent = new Intent(this, CreateGame.class);
+        intent.putExtra("resume", x);
         startActivity(intent);
         finish();
     }
