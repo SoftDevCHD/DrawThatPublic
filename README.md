@@ -95,7 +95,11 @@ App similar to pictionary game. DrawThat is played locally with a group of peopl
 
 Here, you can see walkthroughs for each unit to show the build progress of the app.
 
+### Walkthrough Unit 10
+
 <img src='walkthrough-unit10.gif' title='Walkthrough Unit 10' width='' alt='Walkthrough Unit 10' />
+
+### Walkthrough Unit 11
 
 <img src='walkthrough-unit11.gif' title='Walkthrough Unit 11' width='' alt='Walkthrough Unit 11' />
 
