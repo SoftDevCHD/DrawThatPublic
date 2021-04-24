@@ -60,17 +60,15 @@ public class CreateGame extends AppCompatActivity {
     private void findPreviousGames() {
         ParseQuery<Game> query = ParseQuery.getQuery(Game.class);
         query.whereEqualTo(Game.KEY_CREATED_BY, ParseUser.getCurrentUser());
-        query.setLimit(1);
-        query.findInBackground(new FindCallback<Game>() {
-            @Override
-            public void done(List<Game> games, ParseException e) {
-                if (e != null) {
-                    Log.e(TAG, "No previous games found", e);
-                    return;
-                }
+        query.whereExists(Game.KEY_CREATED_AT);
+        try {
+                List<Game> games = query.find();
                 btnResume.setEnabled(true);
+            } catch (Exception e) {
+                Log.e(TAG, "No previous games found");
+                e.printStackTrace();
+                return;
             }
-        });
     }
 
     private void resumeGame() {
@@ -80,20 +78,18 @@ public class CreateGame extends AppCompatActivity {
         query.include(Game.KEY_TEAM_ONE_SCORE);
         query.include(Game.KEY_TEAM_TWO_NAME);
         query.include(Game.KEY_TEAM_TWO_SCORE);
-        query.include(Game.KEY_PHRASE);
         query.addDescendingOrder(Game.KEY_CREATED_AT);
         query.setLimit(1);
-        query.findInBackground(new FindCallback<Game>() {
-            @Override
-            public void done(List<Game> games, ParseException e) {
-                if (e != null) {
-                    Log.e(TAG, "Issue with getting games", e);
-                    return;
-                }
-                Game game = games.get(0);
-                loadMainActivity(game.getTeamOneName(), game.getTeamTwoName(), game.getTeamOneScore(), game.getTeamTwoScore(), game.getPhrase());
-            }
-        });
+        try {
+            List<Game> games = query.find();
+            Game game = games.get(0);
+            loadMainActivity(game.getTeamOneName(), game.getTeamTwoName(), game.getTeamOneScore(), game.getTeamTwoScore());
+
+        } catch (Exception e) {
+            Log.e(TAG, "Error querying previous games");
+            e.printStackTrace();
+            return;
+        }
     }
 
     private void saveGame() {
@@ -116,13 +112,12 @@ public class CreateGame extends AppCompatActivity {
         });
     }
 
-    private void loadMainActivity(String teamOne, String teamTwo, int scoreOne, int scoreTwo, String phrase) {
+    private void loadMainActivity(String teamOne, String teamTwo, int scoreOne, int scoreTwo) {
         Intent intent = new Intent(this, MainActivity.class);
         intent.putExtra("teamOneName", teamOne);
         intent.putExtra("teamTwoName", teamTwo);
         intent.putExtra("teamOneScore", scoreOne);
         intent.putExtra("teamTwoScore", scoreTwo);
-        intent.putExtra("phrase", phrase);
         startActivity(intent);
         finish();
     }

@@ -16,7 +16,6 @@ public class Game extends ParseObject {
     public static final String KEY_TEAM_TWO_SCORE = "teamTwoScore";
     public static final String KEY_CREATED_BY = "createdBy";
     public static final String KEY_CREATED_AT = "createdAt";
-    public static final String KEY_PHRASE = "phrase";
 
     public String getId() { return getString(KEY_ID); }
 
@@ -41,6 +40,4 @@ public class Game extends ParseObject {
     public ParseUser getCreatedBy() { return getParseUser(KEY_CREATED_BY); }
 
     public Date getCreatedAt() { return getDate(KEY_CREATED_AT); }
-
-    public String getPhrase() { return getString(KEY_PHRASE); }
 }

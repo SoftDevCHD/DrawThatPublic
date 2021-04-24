@@ -25,6 +25,8 @@ import com.parse.Parse;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
+import com.parse.ParseUser;
+import com.pictionary.Game;
 import com.pictionary.Phrase;
 import com.pictionary.R;
 
@@ -38,8 +40,8 @@ public class GameFragment extends Fragment {
     public static final String TAG = "GameFragment";
     private TextView tvDifficulty;
     private TextView tvName;
-    private TextView teamOneScore;
-    private TextView teamTwoScore;
+    private TextView teamOneInfo;
+    private TextView teamTwoInfo;
     private Button btnStartTimer;
     private Button btnNextPhrase;
     private ProgressBar pgTimer;
@@ -55,6 +57,9 @@ public class GameFragment extends Fragment {
     private int timerEndColor;
     private int timerIdleColor;
     private int timerDuration;
+    private String nameOne;
+    private String nameTwo;
+    private Bundle bundle;
     Phrase phrase;
 
 
@@ -71,20 +76,28 @@ public class GameFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        try {
+            bundle = getArguments();
+            setupNewPhrase();
+            phrase = getPhrase();
+            tvDifficulty.setText(phrase.getDifficulty());
+            tvName.setText(phrase.getName());
+        } catch (Exception e) {
+            Log.e(TAG, "new game is created");
+            setupNewPhrase();
+            phrase = getPhrase();
+            tvDifficulty.setText(phrase.getDifficulty());
+            tvName.setText(phrase.getName());
+        }
 
         tvDifficulty = (TextView) view.findViewById(R.id.tvDifficulty);
         tvName = (TextView) view.findViewById(R.id.tvName);
         btnStartTimer = (Button) view.findViewById(R.id.btnStartTimer);
         btnNextPhrase = (Button) view.findViewById(R.id.btnNextPhrase);
         pgTimer = (ProgressBar) view.findViewById(R.id.pgTimer);
-        teamOneScore = (TextView) view.findViewById(R.id.tvTeamOne);
-        teamTwoScore = (TextView) view.findViewById(R.id.tvTeamTwo);
+        teamOneInfo = (TextView) view.findViewById(R.id.tvTeamOne);
+        teamTwoInfo = (TextView) view.findViewById(R.id.tvTeamTwo);
 
-        phrase = getPhrase();
-        tvDifficulty.setText(phrase.getDifficulty());
-        tvName.setText(phrase.getName());
-
-        setupNewPhrase();
 
         btnNextPhrase.setOnClickListener(new View.OnClickListener() {
             @Override
