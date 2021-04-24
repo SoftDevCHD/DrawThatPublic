@@ -30,10 +30,10 @@ App similar to pictionary game. DrawThat is played locally with a group of peopl
 - [x] User can register as a group.
 - [x] User can login.
 - [x] User can start new game.
-- [ ] User can resume last game.
+- [x] User can resume last game.
 - [x] User can name the teams.
-- [ ] App picks random word for user to draw.
-- [ ] App keeps time for drawing phase.
+- [x] App picks random word for user to draw.
+- [x] App keeps time for drawing phase.
 - [ ] Game loop (start round, app picks word, user draws, end round).
 - [ ] User can use app to keep score.
 - [ ] User can take a picture of their drawings.
