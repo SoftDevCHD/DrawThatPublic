@@ -3,6 +3,7 @@ package com.pictionary.fragments;
 import android.animation.Animator;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
+import android.annotation.SuppressLint;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
@@ -12,6 +13,7 @@ import androidx.fragment.app.Fragment;
 
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.LinearInterpolator;
@@ -40,6 +42,7 @@ public class GameFragment extends Fragment {
     private TextView tvTeamTwoScore;
     private Button btnStartTimer;
     private Button btnNextPhrase;
+    private Button btnRevealPhrase;
     private ProgressBar pgTimer;
     private Drawable pgDrawable;
     private ObjectAnimator animProgress;
@@ -66,12 +69,14 @@ public class GameFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_game, container, false);
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
         tvDifficulty = (TextView) view.findViewById(R.id.tvDifficulty);
         tvName = (TextView) view.findViewById(R.id.tvName);
+        btnRevealPhrase = (Button) view.findViewById(R.id.btnRevealPhrase);
         btnStartTimer = (Button) view.findViewById(R.id.btnStartTimer);
         btnNextPhrase = (Button) view.findViewById(R.id.btnNextPhrase);
         pgTimer = (ProgressBar) view.findViewById(R.id.pgTimer);
@@ -100,6 +105,23 @@ public class GameFragment extends Fragment {
                 setupNewPhrase();
             }
         });
+
+
+        btnRevealPhrase.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                switch (event.getAction() & MotionEvent.ACTION_MASK) {
+                    case MotionEvent.ACTION_DOWN:
+                        tvName.setVisibility(View.VISIBLE);
+                        break;
+                    case MotionEvent.ACTION_CANCEL:
+                    default:
+                        tvName.setVisibility(View.INVISIBLE);
+                }
+                return false;
+            }
+        });
+
 
         // Set up timer animation
         timerDuration = 60;

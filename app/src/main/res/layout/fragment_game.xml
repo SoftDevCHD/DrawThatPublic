@@ -19,6 +19,7 @@
             android:layout_marginTop="40dp"
             android:textSize="36sp"
             android:typeface="normal"
+            android:visibility="invisible"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvDifficulty"
@@ -29,13 +30,13 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="32dp"
-            android:layout_marginTop="28dp"
+            android:layout_marginTop="32dp"
             android:layout_marginEnd="32dp"
             android:text="Start Timer"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvName" />
+            app:layout_constraintTop_toBottomOf="@+id/tvRevealExplanation" />
 
         <Button
             android:id="@+id/btnNextPhrase"
@@ -66,10 +67,11 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="32dp"
-            android:layout_marginTop="28dp"
+            android:layout_marginTop="32dp"
             android:layout_marginEnd="32dp"
             android:max="1000"
             android:progress="1000"
+            android:scaleY="8"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.493"
             app:layout_constraintStart_toStartOf="parent"
@@ -114,6 +116,26 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="Team Two Score" />
+
+        <Button
+            android:id="@+id/btnRevealPhrase"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:text="Reveal Word"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvName" />
+
+        <TextView
+            android:id="@+id/tvRevealExplanation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="Only let the drawers see the word!"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btnRevealPhrase" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </FrameLayout>
