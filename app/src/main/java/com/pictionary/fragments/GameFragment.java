@@ -4,6 +4,7 @@ import android.animation.Animator;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
@@ -24,6 +25,7 @@ import android.widget.Toast;
 
 import com.parse.ParseException;
 import com.parse.ParseQuery;
+import com.pictionary.DetailActivity;
 import com.pictionary.Phrase;
 import com.pictionary.R;
 
@@ -43,6 +45,7 @@ public class GameFragment extends Fragment {
     private Button btnStartTimer;
     private Button btnNextPhrase;
     private Button btnRevealPhrase;
+    private Button btnDetail;
     private ProgressBar pgTimer;
     private Drawable pgDrawable;
     private ObjectAnimator animProgress;
@@ -79,6 +82,7 @@ public class GameFragment extends Fragment {
         btnRevealPhrase = (Button) view.findViewById(R.id.btnRevealPhrase);
         btnStartTimer = (Button) view.findViewById(R.id.btnStartTimer);
         btnNextPhrase = (Button) view.findViewById(R.id.btnNextPhrase);
+        btnDetail = (Button)view.findViewById(R.id.btnDetail);
         pgTimer = (ProgressBar) view.findViewById(R.id.pgTimer);
         tvTeamOneName = (TextView) view.findViewById(R.id.tvTeamOneName);
         tvTeamTwoName = (TextView) view.findViewById(R.id.tvTeamTwoName);
@@ -122,6 +126,14 @@ public class GameFragment extends Fragment {
             }
         });
 
+        // Click on name to go to detail activity
+        btnDetail.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent detailIntent = new Intent(getActivity(), DetailActivity.class);
+                startActivity(detailIntent);
+            }
+        });
 
         // Set up timer animation
         timerDuration = 60;
