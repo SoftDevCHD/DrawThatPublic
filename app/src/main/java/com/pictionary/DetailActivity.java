@@ -45,7 +45,8 @@ public class DetailActivity extends AppCompatActivity {
         btnCreatePost.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                
+                Intent postIntent = new Intent(DetailActivity.this, CreationActivity.class);
+                startActivity(postIntent);
             }
         });
     }
