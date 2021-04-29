@@ -16,6 +16,8 @@ import java.util.List;
 
 public class DetailActivity extends AppCompatActivity {
 
+    public static final String TAG = "DetailActivity";
+
     private Button btnCreatePost;
     private RecyclerView rvPosts;
     private PostsAdapter postsAdapter;
@@ -41,7 +43,7 @@ public class DetailActivity extends AppCompatActivity {
         posts.add("Group 3");
         postsAdapter.notifyDataSetChanged();
 
-        // Set action for create post
+        // Go to creation screen
         btnCreatePost.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

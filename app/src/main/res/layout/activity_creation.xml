@@ -7,4 +7,35 @@
     android:layout_height="match_parent"
     tools:context=".CreationActivity">
 
+    <Button
+        android:id="@+id/btnTakePicture"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Take Picture" />
+
+    <ImageView
+        android:id="@+id/ivCreatePicture"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_below="@+id/btnTakePicture"
+        android:layout_alignParentStart="true"
+        tools:srcCompat="@tools:sample/avatars" />
+
+    <EditText
+        android:id="@+id/etDescription"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ivCreatePicture"
+        android:layout_alignParentStart="true"
+        android:ems="10"
+        android:hint="Description"
+        android:inputType="textPersonName" />
+
+    <Button
+        android:id="@+id/btnSubmit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/etDescription"
+        android:layout_alignParentStart="true"
+        android:text="Submit" />
 </RelativeLayout>
