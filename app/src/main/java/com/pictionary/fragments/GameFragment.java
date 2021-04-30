@@ -59,6 +59,8 @@ public class GameFragment extends Fragment {
     private int timerEndColor;
     private int timerIdleColor;
     private int timerDuration;
+    private int scoreOne;
+    private int scoreTwo;
     Phrase phrase;
 
 
@@ -93,8 +95,16 @@ public class GameFragment extends Fragment {
             Bundle args = getArguments();
             tvTeamOneName.setText(args.getString("teamOneName") != null ? args.getString("teamOneName") : "Team One");
             tvTeamTwoName.setText(args.getString("teamTwoName") != null ? args.getString("teamTwoName") : "Team Two");
-            tvTeamOneScore.setText(String.valueOf(args.getInt("teamOneScore")));
-            tvTeamTwoScore.setText(String.valueOf(args.getInt("teamTwoScore")));
+            scoreOne = args.getInt("teamOneScore");
+            scoreTwo = args.getInt("teamTwoScore");
+            tvTeamOneScore.setText(String.valueOf(scoreOne));
+            tvTeamTwoScore.setText(String.valueOf(scoreTwo));
+        }
+        else {
+            scoreOne = 0;
+            scoreTwo = 0;
+            tvTeamOneScore.setText(scoreOne);
+            tvTeamTwoScore.setText(scoreTwo);
         }
 
         phrase = getPhrase();
@@ -110,6 +120,37 @@ public class GameFragment extends Fragment {
             }
         });
 
+        tvTeamOneScore.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                scoreOne = 0;
+                tvTeamOneScore.setText(String.valueOf(scoreOne));
+            }
+        });
+
+        tvTeamTwoScore.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                scoreTwo = 0;
+                tvTeamTwoScore.setText(String.valueOf(scoreTwo));
+            }
+        });
+
+        tvTeamOneName.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                scoreOne++;
+                tvTeamOneScore.setText(String.valueOf(scoreOne));
+            }
+        });
+
+        tvTeamTwoName.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                scoreTwo++;
+                tvTeamTwoScore.setText(String.valueOf(scoreTwo));
+            }
+        });
 
         btnRevealPhrase.setOnTouchListener(new View.OnTouchListener() {
             @Override
