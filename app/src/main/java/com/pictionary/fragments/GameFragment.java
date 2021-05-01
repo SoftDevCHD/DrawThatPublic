@@ -29,6 +29,8 @@ import com.pictionary.DetailActivity;
 import com.pictionary.Phrase;
 import com.pictionary.R;
 
+import org.parceler.Parcels;
+
 import java.util.List;
 import java.util.Random;
 
@@ -172,6 +174,7 @@ public class GameFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent detailIntent = new Intent(getActivity(), DetailActivity.class);
+                detailIntent.putExtra("currentPhrase", Parcels.wrap(phrase));
                 startActivity(detailIntent);
             }
         });
