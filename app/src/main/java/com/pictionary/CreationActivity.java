@@ -1,8 +1,16 @@
 package com.pictionary;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.FileProvider;
 
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -23,12 +31,15 @@ import java.io.File;
 public class CreationActivity extends AppCompatActivity {
 
     public static final String TAG = "CreationActivity";
+    public static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 20;
 
     private Button btnTakePicture;
     private Button btnSubmit;
     private ImageView ivCreatePicture;
     private EditText etDescription;
     private Phrase currentPhrase;
+    private File photoFile;
+    private String photoFileName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,10 +53,13 @@ public class CreationActivity extends AppCompatActivity {
         ivCreatePicture = findViewById(R.id.ivCreatePicture);
         etDescription = findViewById(R.id.etDescription);
 
+        photoFileName = "image.jpg";
+
         btnTakePicture.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // Open camera, set ivCreatePicture to picture taken
+                launchCamera();
             }
         });
 
@@ -54,11 +68,10 @@ public class CreationActivity extends AppCompatActivity {
             public void onClick(View v) {
                 // Create post, put it in recycler view
                 String description = etDescription.getText().toString();
-                File image = null;      // TODO: Use actual image
                 ParseUser user = ParseUser.getCurrentUser();
                 Phrase phrase = currentPhrase;
 
-                savePost(description, image, user, phrase);
+                savePost(description, photoFile, user, phrase);
             }
         });
     }
@@ -69,7 +82,7 @@ public class CreationActivity extends AppCompatActivity {
 
         // Set up post to be saved
         post.put("description", description);
-        //post.put("image", image);     Uncomment this after implementing camera
+        post.put("image", new ParseFile(image));
         post.put("user", user);
         post.put("phrase", phrase);
 
@@ -87,5 +100,40 @@ public class CreationActivity extends AppCompatActivity {
                 Toast.makeText(CreationActivity.this, "Posted to DrawThat!", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    private void launchCamera() {
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        photoFile = getPhotoFileUri(photoFileName);
+
+        Uri fileProvider = FileProvider.getUriForFile(CreationActivity.this, "com.codepath.fileprovider.Pictionary", photoFile);
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, fileProvider);
+
+        if(intent.resolveActivity(getPackageManager()) != null) {
+            startActivityForResult(intent, CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
+        }
+    }
+
+    public File getPhotoFileUri(String fileName) {
+        File mediaStorageDir = new File(getExternalFilesDir(Environment.DIRECTORY_PICTURES), TAG);
+
+        if(!mediaStorageDir.exists() && !mediaStorageDir.mkdirs()) {
+            Log.d(TAG, "Failed to create directory");
+        }
+
+        return new File(mediaStorageDir.getPath() + File.separator + fileName);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE) {
+            if (resultCode == RESULT_OK) {
+                Bitmap takenImage = BitmapFactory.decodeFile(photoFile.getAbsolutePath());
+                ivCreatePicture.setImageBitmap(takenImage);
+            } else {
+                Toast.makeText(this, "Picture was taken", Toast.LENGTH_SHORT).show();
+            }
+        }
     }
 }
