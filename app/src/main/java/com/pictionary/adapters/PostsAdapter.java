@@ -12,6 +12,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.parse.ParseFile;
+import com.pictionary.Post;
 import com.pictionary.R;
 
 import java.util.List;
@@ -24,9 +26,9 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
        TODO: Change data to a list of Posts (class not yet created) and update items accordingly.
      */
     Context context;
-    List<String> posts;
+    List<Post> posts;
 
-    public PostsAdapter(Context context, List<String> posts) {
+    public PostsAdapter(Context context, List<Post> posts) {
         this.context = context;
         this.posts = posts;
     }
@@ -40,7 +42,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        String post = posts.get(position);
+        Post post = posts.get(position);
         holder.bind(post);
     }
 
@@ -51,22 +53,30 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        ImageView ivPicture;
-        TextView tvUser;
-        TextView tvDescription;
+        private ImageView ivPicture;
+        private TextView tvUser;
+        private TextView tvDescription;
+        private final View vdivider;
 
-        public ViewHolder(@NonNull View itemView) {
+        public ViewHolder(View itemView) {
             super(itemView);
 
+            vdivider = itemView.findViewById(R.id.vDivider);
             ivPicture = itemView.findViewById(R.id.ivPicture);
             tvUser = itemView.findViewById(R.id.tvUser);
             tvDescription = itemView.findViewById(R.id.tvDescription);
         }
 
-        public void bind(String post) {
-            tvUser.setText(post);
-            tvDescription.setText("Example description!");
-            Glide.with(context).load(R.drawable.ic_launcher_background).into(ivPicture);
+        public void bind(Post post) {
+            tvUser.setText(post.getUser().getUsername());
+            tvDescription.setText(post.getDescription());
+            ParseFile pic = post.getImage();
+            if (pic != null) {
+                Glide.with(context).load(pic.getUrl()).into(ivPicture);
+            }
+            else {
+                Glide.with(context).load(R.drawable.ic_launcher_background).into(ivPicture);
+            }
         }
     }
 }
