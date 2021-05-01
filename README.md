@@ -34,10 +34,10 @@ App similar to pictionary game. DrawThat is played locally with a group of peopl
 - [x] User can name the teams.
 - [x] App picks random word for user to draw.
 - [x] App keeps time for drawing phase.
-- [ ] Game loop (start round, app picks word, user draws, end round).
-- [ ] User can use app to keep score.
-- [ ] User can take a picture of their drawings.
-- [ ] User can post pictures.
+- [x] Game loop (start round, app picks word, user draws, end round).
+- [x] User can use app to keep score.
+- [x] User can take a picture of their drawings.
+- [x] User can post pictures.
 - [ ] User can see other groups' pictures in feed.
 
 **Optional Nice-to-have Stories**
@@ -102,6 +102,10 @@ Here, you can see walkthroughs for each unit to show the build progress of the a
 ### Walkthrough Unit 11
 
 <img src='walkthrough-unit11.gif' title='Walkthrough Unit 11' width='' alt='Walkthrough Unit 11' />
+
+### Walkthrough Unit 12
+
+<img src='walkthrough-unit12.gif' title='Walkthrough Unit 12' width='' alt='Walkthrough Unit 12' />
 
 ### [BONUS] Digital Wireframes & Mockups
 
