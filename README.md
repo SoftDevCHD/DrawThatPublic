@@ -38,7 +38,7 @@ App similar to pictionary game. DrawThat is played locally with a group of peopl
 - [x] User can use app to keep score.
 - [x] User can take a picture of their drawings.
 - [x] User can post pictures.
-- [ ] User can see other groups' pictures in feed.
+- [x] User can see other groups' pictures in feed.
 
 **Optional Nice-to-have Stories**
 
