@@ -36,7 +36,6 @@ import org.parceler.Parcels;
 import java.util.List;
 import java.util.Random;
 
-
 public class GameFragment extends Fragment {
 
     public static final String TAG = "GameFragment";
@@ -68,7 +67,6 @@ public class GameFragment extends Fragment {
     private int scoreOne;
     private int scoreTwo;
     Phrase phrase;
-
 
     public GameFragment() {
         // Required empty public constructor
