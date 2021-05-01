@@ -16,6 +16,7 @@ public class ParseApplication extends Application {
         // Register Parse models
         ParseObject.registerSubclass(Phrase.class);
         ParseObject.registerSubclass(Game.class);
+        ParseObject.registerSubclass(Post.class);
 
         Parse.initialize(new Parse.Configuration.Builder(this)
                 .applicationId(BACK4APP_APPLICATION_ID)

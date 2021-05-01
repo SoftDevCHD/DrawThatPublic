@@ -84,13 +84,13 @@ public class CreationActivity extends AppCompatActivity {
 
     // Saves a new post to Parse
     private void savePost(String description, File image, ParseUser user, Phrase phrase) {
-        ParseObject post = new ParseObject("Post");
+        Post post = new Post();
 
         // Set up post to be saved
-        post.put("description", description);
-        post.put("image", new ParseFile(image));
-        post.put("user", user);
-        post.put("phrase", phrase);
+        post.setDescription(description);
+        post.setImage(new ParseFile(image));
+        post.setUser(user);
+        post.setPhrase(phrase);
 
         // Save post
         post.saveInBackground(new SaveCallback() {
