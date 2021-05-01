@@ -16,12 +16,26 @@
         android:layout_marginBottom="5dp"
         android:text="Take Picture" />
 
+    <TextView
+        android:id="@+id/tvPhrase"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/btnTakePicture"
+        android:layout_alignParentStart="true"
+        android:textAlignment="center"
+        android:textSize="18sp"
+        tools:text="Current Phrase: Apple" />
+
     <ImageView
         android:id="@+id/ivCreatePicture"
         android:layout_width="match_parent"
         android:layout_height="200dp"
-        android:layout_below="@+id/btnTakePicture"
+        android:layout_below="@+id/tvPhrase"
         android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="-3dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="0dp"
         tools:srcCompat="@tools:sample/avatars" />
 
     <EditText
@@ -44,4 +58,5 @@
         android:layout_marginStart="5dp"
         android:layout_marginEnd="5dp"
         android:text="Submit" />
+
 </RelativeLayout>

@@ -16,6 +16,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.parse.ParseException;
@@ -34,6 +35,7 @@ public class CreationActivity extends AppCompatActivity {
     public static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 20;
 
     private Button btnTakePicture;
+    private TextView tvPhrase;
     private Button btnSubmit;
     private ImageView ivCreatePicture;
     private EditText etDescription;
@@ -49,6 +51,7 @@ public class CreationActivity extends AppCompatActivity {
         currentPhrase = Parcels.unwrap(getIntent().getParcelableExtra("currentPhrase"));
 
         btnTakePicture = findViewById(R.id.btnTakePicture);
+        tvPhrase = findViewById(R.id.tvPhrase);
         btnSubmit = findViewById(R.id.btnSubmit);
         ivCreatePicture = findViewById(R.id.ivCreatePicture);
         etDescription = findViewById(R.id.etDescription);
@@ -62,6 +65,9 @@ public class CreationActivity extends AppCompatActivity {
                 launchCamera();
             }
         });
+
+        String currPhrase = "Current Phrase: " + currentPhrase.getName();
+        tvPhrase.setText(currPhrase);
 
         btnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
