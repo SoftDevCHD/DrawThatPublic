@@ -70,10 +70,6 @@ public class CreateGame extends AppCompatActivity {
     private void resumeGame() {
         ParseQuery<Game> query = ParseQuery.getQuery(Game.class);
         query.whereEqualTo(Game.KEY_CREATED_BY, ParseUser.getCurrentUser());
-        query.include(Game.KEY_TEAM_ONE_NAME);
-        query.include(Game.KEY_TEAM_ONE_SCORE);
-        query.include(Game.KEY_TEAM_TWO_NAME);
-        query.include(Game.KEY_TEAM_TWO_SCORE);
         query.addDescendingOrder(Game.KEY_CREATED_AT);
         query.setLimit(1);
         try {
