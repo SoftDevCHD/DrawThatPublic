@@ -99,7 +99,7 @@ public class CreateGame extends AppCompatActivity {
                     return;
                 }
 
-                loadMainActivity(game.getTeamOneName(), game.getTeamTwoName());
+                loadMainActivity(game.getTeamOneName(), game.getTeamTwoName(), 0, 0);
             }
         });
     }
@@ -110,20 +110,6 @@ public class CreateGame extends AppCompatActivity {
         intent.putExtra("teamTwoName", teamTwo);
         intent.putExtra("teamOneScore", scoreOne);
         intent.putExtra("teamTwoScore", scoreTwo);
-        startActivity(intent);
-        finish();
-    }
-
-    private void loadMainActivity(String teamOne, String teamTwo) {
-        Intent intent = new Intent(this, MainActivity.class);
-        intent.putExtra("teamOneName", teamOne);
-        intent.putExtra("teamTwoName", teamTwo);
-        startActivity(intent);
-        finish();
-    }
-
-    private void loadMainActivity() {
-        Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
         finish();
     }
