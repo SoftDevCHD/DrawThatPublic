@@ -7,6 +7,8 @@ import androidx.core.content.FileProvider;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
+import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -27,7 +29,10 @@ import com.parse.SaveCallback;
 
 import org.parceler.Parcels;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 
 public class CreationActivity extends AppCompatActivity {
 
@@ -84,13 +89,13 @@ public class CreationActivity extends AppCompatActivity {
 
     // Saves a new post to Parse
     private void savePost(String description, File image, ParseUser user, Phrase phrase) {
-        ParseObject post = new ParseObject("Post");
+        Post post = new Post();
 
         // Set up post to be saved
-        post.put("description", description);
-        post.put("image", new ParseFile(image));
-        post.put("user", user);
-        post.put("phrase", phrase);
+        post.setDescription(description);
+        post.setImage(new ParseFile(image));
+        post.setUser(user);
+        post.setPhrase(phrase);
 
         // Save post
         post.saveInBackground(new SaveCallback() {
@@ -135,11 +140,92 @@ public class CreationActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE) {
             if (resultCode == RESULT_OK) {
-                Bitmap takenImage = BitmapFactory.decodeFile(photoFile.getAbsolutePath());
-                ivCreatePicture.setImageBitmap(takenImage);
+
+                // Rotate the image accordingly
+                Bitmap takenImage = rotateBitmapOrientation(photoFile.getAbsolutePath());
+                // RESIZE BITMAP, see section below
+                Bitmap resizedImage;
+                try {
+                    resizedImage = resizeImage(takenImage);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    return;
+                }
+                // Load the taken image into a preview
+                ivCreatePicture.setImageBitmap(resizedImage);
             } else {
                 Toast.makeText(this, "Picture was taken", Toast.LENGTH_SHORT).show();
             }
         }
     }
+
+    public Bitmap resizeImage(Bitmap image) throws IOException {
+        Bitmap resizedImage;
+        if (image.getWidth() > image.getHeight()) {
+            resizedImage = scaleToFitWidth(image, 1024);
+        } else {
+            resizedImage = scaleToFitHeight(image, 1024);
+        }
+        // Configure byte output stream
+        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+        // Compress the image further
+        resizedImage.compress(Bitmap.CompressFormat.JPEG, 40, bytes);
+        // Create a new file for the resized bitmap (`getPhotoFileUri` defined above)
+        File resizedFile = getPhotoFileUri("resized_" + photoFileName);
+        resizedFile.createNewFile();
+        FileOutputStream fos = new FileOutputStream(resizedFile);
+        // Write the bytes of the bitmap to file
+        fos.write(bytes.toByteArray());
+        fos.close();
+        photoFile = resizedFile;
+        return resizedImage;
+    }
+
+    public Bitmap rotateBitmapOrientation(String photoFilePath) {
+        // Create and configure BitmapFactory
+        BitmapFactory.Options bounds = new BitmapFactory.Options();
+        bounds.inJustDecodeBounds = true;
+        BitmapFactory.decodeFile(photoFilePath, bounds);
+        BitmapFactory.Options opts = new BitmapFactory.Options();
+        Bitmap bm = BitmapFactory.decodeFile(photoFilePath);
+
+        ExifInterface exif = null;
+        try {
+            exif = new ExifInterface(photoFilePath);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        String orientString = exif.getAttribute(ExifInterface.TAG_ORIENTATION);
+        int orientation = orientString != null ? Integer.parseInt(orientString) : ExifInterface.ORIENTATION_NORMAL;
+        int rotationAngle = 0;
+        if (orientation == ExifInterface.ORIENTATION_ROTATE_90) rotationAngle = 90;
+        if (orientation == ExifInterface.ORIENTATION_ROTATE_180) rotationAngle = 180;
+        if (orientation == ExifInterface.ORIENTATION_ROTATE_270) rotationAngle = 270;
+        // Rotate Bitmap
+        Matrix matrix = new Matrix();
+        matrix.setRotate(rotationAngle, (float) bm.getWidth() / 2, (float) bm.getHeight() / 2);
+        Bitmap rotatedBitmap = Bitmap.createBitmap(bm, 0, 0, bounds.outWidth, bounds.outHeight, matrix, true);
+        // Return result
+        return rotatedBitmap;
+    }
+
+    // Scale and maintain aspect ratio given a desired height
+    // scaleToFitWidth(bitmap, 100);
+    public static Bitmap scaleToFitWidth(Bitmap b, int width)
+    {
+        float factor = width / (float) b.getWidth();
+        int height = (int) (b.getHeight() * factor);
+        return Bitmap.createScaledBitmap(b, width, height, true);
+    }
+
+
+    // Scale and maintain aspect ratio given a desired height
+    // scaleToFitHeight(bitmap, 100);
+    public static Bitmap scaleToFitHeight(Bitmap b, int height)
+    {
+        float factor = height / (float) b.getHeight();
+        int width = (int) (b.getWidth() * factor);
+        return Bitmap.createScaledBitmap(b, width, height, true);
+    }
+
 }

@@ -70,10 +70,6 @@ public class CreateGame extends AppCompatActivity {
     private void resumeGame() {
         ParseQuery<Game> query = ParseQuery.getQuery(Game.class);
         query.whereEqualTo(Game.KEY_CREATED_BY, ParseUser.getCurrentUser());
-        query.include(Game.KEY_TEAM_ONE_NAME);
-        query.include(Game.KEY_TEAM_ONE_SCORE);
-        query.include(Game.KEY_TEAM_TWO_NAME);
-        query.include(Game.KEY_TEAM_TWO_SCORE);
         query.addDescendingOrder(Game.KEY_CREATED_AT);
         query.setLimit(1);
         try {
@@ -103,7 +99,7 @@ public class CreateGame extends AppCompatActivity {
                     return;
                 }
 
-                loadMainActivity(game.getTeamOneName(), game.getTeamTwoName());
+                loadMainActivity(game.getTeamOneName(), game.getTeamTwoName(), 0, 0);
             }
         });
     }
@@ -114,20 +110,6 @@ public class CreateGame extends AppCompatActivity {
         intent.putExtra("teamTwoName", teamTwo);
         intent.putExtra("teamOneScore", scoreOne);
         intent.putExtra("teamTwoScore", scoreTwo);
-        startActivity(intent);
-        finish();
-    }
-
-    private void loadMainActivity(String teamOne, String teamTwo) {
-        Intent intent = new Intent(this, MainActivity.class);
-        intent.putExtra("teamOneName", teamOne);
-        intent.putExtra("teamTwoName", teamTwo);
-        startActivity(intent);
-        finish();
-    }
-
-    private void loadMainActivity() {
-        Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
         finish();
     }

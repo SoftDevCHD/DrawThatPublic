@@ -31,7 +31,7 @@ public class DetailActivity extends AppCompatActivity {
     private PostsAdapter postsAdapter;
     private List<Post> allPosts;
     private Phrase currentPhrase;
-    private SwipeRefreshLayout swipeContainer;
+    //private SwipeRefreshLayout swipeContainer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,15 +45,15 @@ public class DetailActivity extends AppCompatActivity {
         rvPosts = findViewById(R.id.rvPosts);
         allPosts = new ArrayList<>();
         postsAdapter = new PostsAdapter(this, allPosts);
-        swipeContainer = findViewById(R.id.swipeContainer);
+        //swipeContainer = findViewById(R.id.swipeContainer);
 
-        swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+        /*swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
                 Log.i(TAG, "Fetching last 20 posts");
                 queryPosts();
             }
-        });
+        });*/
 
         btnCreatePost.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -82,7 +82,7 @@ public class DetailActivity extends AppCompatActivity {
                 if (e != null) {
                     Log.e(TAG, "Issue with getting posts", e);
                     e.printStackTrace();
-                    swipeContainer.setRefreshing(false);
+                    //swipeContainer.setRefreshing(false);
                     return;
                 }
                 for (Post post: posts) {
@@ -90,7 +90,7 @@ public class DetailActivity extends AppCompatActivity {
                 }
                 allPosts.addAll(posts);
                 postsAdapter.notifyDataSetChanged();
-                swipeContainer.setRefreshing(false);
+                //swipeContainer.setRefreshing(false);
             }
         });
     }

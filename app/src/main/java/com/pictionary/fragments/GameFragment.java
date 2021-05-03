@@ -4,12 +4,14 @@ import android.animation.Animator;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.annotation.SuppressLint;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
 import android.util.Log;
@@ -43,6 +45,8 @@ public class GameFragment extends Fragment {
     private TextView tvTeamTwoName;
     private TextView tvTeamOneScore;
     private TextView tvTeamTwoScore;
+    private Button btnTeamOne;
+    private Button btnTeamTwo;
     private Button btnStartTimer;
     private Button btnNextPhrase;
     private Button btnRevealPhrase;
@@ -90,6 +94,8 @@ public class GameFragment extends Fragment {
         tvTeamTwoName = (TextView) view.findViewById(R.id.tvTeamTwoName);
         tvTeamOneScore = view.findViewById(R.id.tvTeamOneScore);
         tvTeamTwoScore = view.findViewById(R.id.tvTeamTwoScore);
+        btnTeamOne = view.findViewById(R.id.btnTeamOne);
+        btnTeamTwo = view.findViewById(R.id.btnTeamTwo);
 
         if (getArguments() != null) {
             Bundle args = getArguments();
@@ -120,35 +126,85 @@ public class GameFragment extends Fragment {
             }
         });
 
-        tvTeamOneScore.setOnClickListener(new View.OnClickListener() {
+        btnTeamOne.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                scoreOne = 0;
-                tvTeamOneScore.setText(String.valueOf(scoreOne));
+                AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
+                builder.setTitle(tvTeamOneName.getText().toString());
+                String[] options = {"Score +1", "Reset Score","Cancel"};
+                builder.setItems(options, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        switch (i) {
+                            case 0:
+                                scoreOne++;
+                                tvTeamOneScore.setText(String.valueOf(scoreOne));
+                                // TODO: send the data back and update the database
+                                break;
+                            case 1:
+                                // Use another AlertDialog to confirm the action
+                                new AlertDialog.Builder(view.getContext())
+                                        .setTitle("Reset Score")
+                                        .setMessage("Are you sure you want to rest score?")
+                                        .setPositiveButton("YES", new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialogInterface, int i) {
+                                                scoreOne = 0;
+                                                tvTeamOneScore.setText(String.valueOf(scoreOne));
+                                                // TODO: send the data back and update the database
+                                            }
+                                        })
+                                        .setNegativeButton("No", null)
+                                        .show();
+                                break;
+                            case 2:
+                                break;
+                        }
+                    }
+                });
+                AlertDialog dialog = builder.create();
+                dialog.show();
             }
         });
 
-        tvTeamTwoScore.setOnClickListener(new View.OnClickListener() {
+        btnTeamTwo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                scoreTwo = 0;
-                tvTeamTwoScore.setText(String.valueOf(scoreTwo));
-            }
-        });
-
-        tvTeamOneName.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                scoreOne++;
-                tvTeamOneScore.setText(String.valueOf(scoreOne));
-            }
-        });
-
-        tvTeamTwoName.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                scoreTwo++;
-                tvTeamTwoScore.setText(String.valueOf(scoreTwo));
+                AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
+                builder.setTitle(tvTeamTwoName.getText().toString());
+                String[] options = {"Score +1", "Reset Score","Cancel"};
+                builder.setItems(options, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        switch (i) {
+                            case 0:
+                                scoreTwo++;
+                                tvTeamTwoScore.setText(String.valueOf(scoreTwo));
+                                // TODO: send the data back and update the database
+                                break;
+                            case 1:
+                                // Use another AlertDialog to confirm the action
+                                new AlertDialog.Builder(view.getContext())
+                                        .setTitle("Reset Score")
+                                        .setMessage("Are you sure you want to rest score?")
+                                        .setPositiveButton("YES", new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialogInterface, int i) {
+                                                scoreTwo = 0;
+                                                tvTeamTwoScore.setText(String.valueOf(scoreTwo));
+                                                // TODO: send the data back and update the database
+                                            }
+                                        })
+                                        .setNegativeButton("No", null)
+                                        .show();
+                                break;
+                            case 2:
+                                break;
+                        }
+                    }
+                });
+                AlertDialog dialog = builder.create();
+                dialog.show();
             }
         });
 
