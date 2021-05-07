@@ -20,10 +20,6 @@ import java.util.List;
 
 public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> {
 
-    /* Data is currently a list of Strings, which changes the username for each post.
-       This is temporary to get the RecyclerView working.
-       TODO: Change data to a list of Posts (class not yet created) and update items accordingly.
-     */
     Context context;
     List<Post> posts;
 

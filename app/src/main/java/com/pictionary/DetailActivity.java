@@ -1,5 +1,6 @@
 package com.pictionary;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -25,6 +26,7 @@ import java.util.List;
 public class DetailActivity extends AppCompatActivity {
 
     public static final String TAG = "DetailActivity";
+    public static final int REQUEST_CODE = 10;
 
     private Button btnCreatePost;
     private RecyclerView rvPosts;
@@ -60,7 +62,7 @@ public class DetailActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent postIntent = new Intent(DetailActivity.this, CreationActivity.class);
                 postIntent.putExtra("currentPhrase", Parcels.wrap(currentPhrase));
-                startActivity(postIntent);
+                startActivityForResult(postIntent, REQUEST_CODE);
             }
         });
 
@@ -70,10 +72,20 @@ public class DetailActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        if(requestCode == REQUEST_CODE && resultCode == RESULT_OK) {
+            Post post = Parcels.unwrap(data.getParcelableExtra("post"));
+            allPosts.add(0, post);
+            postsAdapter.notifyItemInserted(0);
+            rvPosts.smoothScrollToPosition(0);
+        }
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+
     protected void queryPosts() {
         ParseQuery<Post> query = ParseQuery.getQuery(Post.class);
         query.include(Post.KEY_USER);
-        query.whereEqualTo(Post.KEY_USER, ParseUser.getCurrentUser());
         query.setLimit(20);
         query.addDescendingOrder(Post.KEY_CREATED_AT);
         query.findInBackground(new FindCallback<Post>() {
