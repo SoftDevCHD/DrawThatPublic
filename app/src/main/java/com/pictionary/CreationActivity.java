@@ -109,6 +109,12 @@ public class CreationActivity extends AppCompatActivity {
                 etDescription.setText("");
                 ivCreatePicture.setImageResource(0);
                 Toast.makeText(CreationActivity.this, "Posted to DrawThat!", Toast.LENGTH_SHORT).show();
+
+                // Go back to feed
+                Intent i = new Intent();
+                i.putExtra("post", Parcels.wrap(post));
+                setResult(RESULT_OK, i);
+                finish();
             }
         });
     }
