@@ -107,6 +107,10 @@ Here, you can see walkthroughs for each unit to show the build progress of the a
 
 <img src='walkthrough-unit12.gif' title='Walkthrough Unit 12' width='' alt='Walkthrough Unit 12' />
 
+### Walkthrough Unit 13
+
+<img src='walkthrough-unit13.gif' title='Walkthrough Unit 13' width='' alt='Walkthrough Unit 13' />
+
 ### [BONUS] Digital Wireframes & Mockups
 
 ### [BONUS] Interactive Prototype
