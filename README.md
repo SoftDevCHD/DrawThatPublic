@@ -45,7 +45,7 @@ App similar to pictionary game. DrawThat is played locally with a group of peopl
 - [ ] User can pick number of teams.
 - [ ] User can select difficulty of words.
 - [ ] User can save multiple different games.
-- [ ] UI/UX improvements.
+- [x] UI/UX improvements.
 
 ### 2. Screen Archetypes
 
