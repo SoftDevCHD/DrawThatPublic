@@ -75,7 +75,7 @@ public class CreateGame extends AppCompatActivity {
         try {
             List<Game> games = query.find();
             Game game = games.get(0);
-            loadMainActivity(game.getTeamOneName(), game.getTeamTwoName(), game.getTeamOneScore(), game.getTeamTwoScore());
+            loadMainActivity(game.getTeamOneName(), game.getTeamTwoName(), game.getTeamOneScore(), game.getTeamTwoScore(), game.getObjectId());
 
         } catch (Exception e) {
             Log.e(TAG, "Error querying previous games");
@@ -99,17 +99,18 @@ public class CreateGame extends AppCompatActivity {
                     return;
                 }
 
-                loadMainActivity(game.getTeamOneName(), game.getTeamTwoName(), 0, 0);
+                loadMainActivity(game.getTeamOneName(), game.getTeamTwoName(), 0, 0, game.getObjectId());
             }
         });
     }
 
-    private void loadMainActivity(String teamOne, String teamTwo, int scoreOne, int scoreTwo) {
+    private void loadMainActivity(String teamOne, String teamTwo, int scoreOne, int scoreTwo, String objectId) {
         Intent intent = new Intent(this, MainActivity.class);
         intent.putExtra("teamOneName", teamOne);
         intent.putExtra("teamTwoName", teamTwo);
         intent.putExtra("teamOneScore", scoreOne);
         intent.putExtra("teamTwoScore", scoreTwo);
+        intent.putExtra("objectId", objectId);
         startActivity(intent);
         finish();
     }

@@ -28,6 +28,7 @@ import android.widget.Toast;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
 import com.pictionary.DetailActivity;
+import com.pictionary.Game;
 import com.pictionary.Phrase;
 import com.pictionary.R;
 
@@ -67,6 +68,7 @@ public class GameFragment extends Fragment {
     private int scoreOne;
     private int scoreTwo;
     Phrase phrase;
+    String objectId;
 
     public GameFragment() {
         // Required empty public constructor
@@ -105,6 +107,7 @@ public class GameFragment extends Fragment {
             scoreTwo = args.getInt("teamTwoScore");
             tvTeamOneScore.setText(String.valueOf(scoreOne));
             tvTeamTwoScore.setText(String.valueOf(scoreTwo));
+            objectId = args.getString("objectId");
         }
         else {
             scoreOne = 0;
@@ -139,7 +142,8 @@ public class GameFragment extends Fragment {
                             case 0:
                                 scoreOne++;
                                 tvTeamOneScore.setText(String.valueOf(scoreOne));
-                                // TODO: send the data back and update the database
+                                // Send the data back and update the database
+                                updateGameStatus();
                                 break;
                             case 1:
                                 // Use another AlertDialog to confirm the action
@@ -151,7 +155,8 @@ public class GameFragment extends Fragment {
                                             public void onClick(DialogInterface dialogInterface, int i) {
                                                 scoreOne = 0;
                                                 tvTeamOneScore.setText(String.valueOf(scoreOne));
-                                                // TODO: send the data back and update the database
+                                                // Send the data back and update the database
+                                                updateGameStatus();
                                             }
                                         })
                                         .setNegativeButton("No", null)
@@ -180,7 +185,8 @@ public class GameFragment extends Fragment {
                             case 0:
                                 scoreTwo++;
                                 tvTeamTwoScore.setText(String.valueOf(scoreTwo));
-                                // TODO: send the data back and update the database
+                                // Send the data back and update the database
+                                updateGameStatus();
                                 break;
                             case 1:
                                 // Use another AlertDialog to confirm the action
@@ -192,7 +198,8 @@ public class GameFragment extends Fragment {
                                             public void onClick(DialogInterface dialogInterface, int i) {
                                                 scoreTwo = 0;
                                                 tvTeamTwoScore.setText(String.valueOf(scoreTwo));
-                                                // TODO: send the data back and update the database
+                                                // Send the data back and update the database
+                                                updateGameStatus();
                                             }
                                         })
                                         .setNegativeButton("No", null)
@@ -324,5 +331,21 @@ public class GameFragment extends Fragment {
             Log.e(TAG, "Unable to retrieve phrases...");
             return null;
         }
+    }
+
+    private void updateGameStatus() {
+        ParseQuery<Game> query = ParseQuery.getQuery(Game.class);
+        // Retrieve the object by id
+        query.getInBackground(objectId, ((object, e) -> {
+            if (e == null) {
+                object.put("teamOneScore", scoreOne);
+                object.put("teamTwoScore", scoreTwo);
+                object.saveInBackground();  // All other fields will remain the same
+            } else {
+                Toast.makeText(this.getContext(), "Error: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                Log.e(TAG, "Error when updating the database with game status " + objectId);
+            }
+        }));
+
     }
 }
