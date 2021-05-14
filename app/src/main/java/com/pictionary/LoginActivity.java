@@ -31,6 +31,11 @@ public class LoginActivity extends AppCompatActivity {
         actionBar.hide();
         setContentView(R.layout.activity_login);
 
+        if (ParseUser.getCurrentUser() != null) {
+            Toast.makeText(this, "Logged in as " + ParseUser.getCurrentUser().getUsername(), Toast.LENGTH_SHORT).show();
+            loadCreateGame(0);
+        }
+
         etUsername = (EditText) findViewById(R.id.etUsername);
         etPassword = (EditText) findViewById(R.id.etPassword);
         btnLogin = (Button) findViewById(R.id.btnLogin);
