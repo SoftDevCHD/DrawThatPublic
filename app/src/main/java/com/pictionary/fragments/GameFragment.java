@@ -149,7 +149,7 @@ public class GameFragment extends Fragment {
                                 // Use another AlertDialog to confirm the action
                                 new AlertDialog.Builder(view.getContext())
                                         .setTitle("Reset Score")
-                                        .setMessage("Are you sure you want to rest score?")
+                                        .setMessage("Are you sure you want to reset score?")
                                         .setPositiveButton("YES", new DialogInterface.OnClickListener() {
                                             @Override
                                             public void onClick(DialogInterface dialogInterface, int i) {
