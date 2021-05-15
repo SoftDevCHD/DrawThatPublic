@@ -4,17 +4,17 @@
 
     <item
         android:id="@+id/action_game"
-        android:icon="@android:drawable/ic_menu_edit"
+        android:icon="@drawable/nav_home"
         android:title="Game"
         app:showAsAction="always" />
     <item
         android:id="@+id/action_status"
-        android:icon="@android:drawable/ic_dialog_info"
+        android:icon="@drawable/nav_status"
         android:title="Status"
         app:showAsAction="always" />
     <item
         android:id="@+id/action_profile"
-        android:icon="@android:drawable/ic_menu_myplaces"
+        android:icon="@drawable/nav_profile"
         android:title="Profile"
         app:showAsAction="always" />
     <item
