@@ -22,8 +22,10 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|right"
         android:layout_margin="16dp"
+        android:backgroundTint="@color/blue"
         app:layout_anchor="@id/rvPosts"
         app:layout_anchorGravity="bottom|right|end"
         app:layout_behavior="com.pictionary.ScrollAwareFABBehavior"
-        app:srcCompat="@android:drawable/ic_menu_add" />
+        app:srcCompat="@drawable/pencil_plus"
+        app:tint="@color/white" />
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
